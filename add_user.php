@@ -1,5 +1,18 @@
-<?php   
-include("header.php");
+<?php
+include "header.php";
+if (isset($_POST['email']) && isset($_POST['password']) && isset($_POST['role'])) {
+    try {
+        include "conf.php";
+        $db = new PDO($dsn, $user, $password);
+        $db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+        $userManager = new UserManager($db);
+        $user = new User(["email" => $_POST['email'], "password" => $_POST['password'], "role" => $_POST['role']]);
+
+    } catch (PDOException $e) {
+        print('<br/>Erreur de connexion : ' . $e->getMessage());
+    }
+}
+
 ?>
 <style> body,html {color:white !important;background-image: url('https://i.imgur.com/xhiRfL6.jpg');height: 100%;} #profile-img {height:200px; margin-bottom:50px;} .h-80 {height: 80% !important;} input::placeholder{color:blue !important;}h2{color:white;font-weight:bolder;font-size:30px; margin-bottom:50px;}</style>
 
@@ -20,6 +33,9 @@ include("header.php");
 </div>
 </div>
 
-<?php   
-include("footer.php");
+<?php
+include "footer.php";
+?>
+<?php
+include "footer.php";
 ?>

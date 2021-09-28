@@ -9,3 +9,5 @@
     <title>Login POO - Connexion</title>
 </head>
 <body>
+<?php 
+include("UserManager.php");

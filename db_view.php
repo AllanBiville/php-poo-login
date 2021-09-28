@@ -5,7 +5,8 @@ include("header.php");
 
 <div class="container h-80">
 <div class="row align-items-center h-100">
-    <div class="col-3 mx-auto">
+    <!-- <div class="col-3 mx-auto"> -->
+        
         <div class="text-center">
             <h2>Voir DB</h2>
             <img id="profile-img" class="rounded-circle profile-img-card" src="https://i.imgur.com/6b6psnA.png" />
@@ -13,47 +14,21 @@ include("header.php");
 
 
             <?php
+            
     try {
+        include "conf.php";
     $db = new PDO($dsn, $user, $password);
     $db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
-    $UserManager = new UserManager($db);
-    $personnages = $personnagesManager->getList();
+    $userManager = new UserManager($db);
+    $users = $userManager->getAll();
 
-    print ('<br/>Liste des personnages : ');
-    foreach ($personnages as $personnage) {
-        print ('<br/><a target="_blank" href="Personnage_view.php?id='. $personnage->getId().'">' . $personnage->getNom()."</a>");
-        
+    foreach ($users as $personnage) {
+        print($personnage);  
     }
-    // $db-> setAttribute(PDO::ATTR_EMULATE_PREPARES,false);
-    // if ($db){
-    //     // print('<br/>Lecture de la base de données :');
-    //     $request = $db->query('SELECT id,nom,`force`, degats,niveau, experience FROM personnages;');
-    //     while($ligne = $request->fetch(PDO::FETCH_ASSOC))
-    //     {
-    //         $perso = new Personnage($ligne);
-    //         print('<br/>' . $perso->getNom() . ' a ' . $perso->getForce() . ' de force, ' . $perso->getDegats() . ' de dégats, ' .
-    //         $perso->getExperience() . ' d\'expérience et est au niveau ' . $perso->getNiveau(). '.');
-    //     }
-    // }
 } catch (PDOException $e) {
     print('<br/>Erreur de connexion : ' . $e->getMessage());
 }
 ?>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         </div>
     </div>
 </div>

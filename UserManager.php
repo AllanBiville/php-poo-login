@@ -1,4 +1,5 @@
 <?php
+include ("User.php");
 class UserManager{
 
     private $_db;
@@ -7,16 +8,21 @@ class UserManager{
     {
         $this->setDb($db);
     }
-    public function setDb(PDO $db) : PersonnagesManager
+    public function setDb(PDO $db) : UserManager
     {
         $this->_db = $db;
         return $this;
     }
-    public function add(Personnages $perso):bool
+    public function add(User $user):bool
     {
-
+        $query = $this->_db->prepare('INSERT INTO users (email,`password`,`role`) VALUES (:email,:password,:role);');
+        print_r($user);
+        $query->bindValue(':email', $user->getEmail());
+        $query->bindValue(':password', $user->getPassword());
+        $query->bindValue(':role', $user->getRole());
+        return $query->execute();
     }
-    public function delete(Personnages $perso):bool
+    public function delete(User $perso)
     {
 
     }
@@ -30,15 +36,15 @@ class UserManager{
     }
     public function getAll():array
     {
-        $listeDePersonnages = array();
-        $request = $this->_db->query('SELECT id,nom,`force`, degats,niveau, experience FROM personnages;');
+        $listeUsers = array();
+        $request = $this->_db->query('SELECT * FROM users;');
         while($ligne = $request->fetch(PDO::FETCH_ASSOC))
          {
-             $perso = new Personnage($ligne);
-             $listeDePersonnages[] = $perso;
+            $perso = new User($ligne);
+            $listeUsers[] = $perso;
 
          }
-         return $listeDePersonnages;
+         return $listeUsers;
     }
     public function update(Personnages $perso):bool
     {
