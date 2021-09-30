@@ -16,7 +16,6 @@ class UserManager{
     public function add(User $user):bool
     {
         $query = $this->_db->prepare('INSERT INTO users (email,`password`,`role`) VALUES (:email,:password,:role);');
-        print_r($user);
         $query->bindValue(':email', $user->getEmail());
         $query->bindValue(':password', $user->getPassword());
         $query->bindValue(':role', $user->getRole());
@@ -24,7 +23,10 @@ class UserManager{
     }
     public function delete(User $perso)
     {
-
+        $query = $this->_db->prepare('DELETE FROM `users`WHERE id=:id;');
+        $query->bindValue(':id', $user->getId());
+        return $query->execute();
+        
     }
     public function getOne(int $id)
     {
