@@ -22,8 +22,9 @@ try {
         print("<td>" . $personnage->getEmail() . "</td>");
         print("<td>" . $personnage->getPassword() . "</td>");
         print("<td>" . $personnage->getRole() . "</td>");
-        print("<td><a href='remove_user.php?id=" . $personnage->getId() . "'>DEL</a></td>");
-        print("</tr>");
+        print("<td><a href='read_user.php?id=" . $personnage->getId() . "'> <i class='fas fa-eye btn btn-primary'></i> </a>");
+        print("<a href='update_user.php?id=" . $personnage->getId() . "'> <i class='fas fa-edit btn btn-warning'></i> </a>");
+        print("<a href='remove_user.php?id=" . $personnage->getId() . "'> <i class='fas fa-trash btn btn-danger'></i> </a></td></tr>");
     }
     print("</table>");
     print("<a href='add_user.php' class='btn btn-primary'>Ajouter Utilisateur</a>");
@@ -31,3 +32,4 @@ try {
     print('<br/>Erreur de connexion : ' . $e->getMessage());
 }
 include "footer.php";
+?>
